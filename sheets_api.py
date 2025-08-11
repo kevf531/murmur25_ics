@@ -5,14 +5,13 @@ import re
 from datetime import datetime
 
 
-
 # %%
 # Constants
 gsheetkey = "1TG5w2ETvf9H3eIB1KJG-yDtwizyyYC-lXnq10gt4kdc"
 sheet_name = "Murmur - Practice Schedule"
 url=f'https://docs.google.com/spreadsheet/ccc?key={gsheetkey}&output=xlsx'
 # Parameters
-name = 'Julia Sacha'
+name = 'Kevin Fan'
 today = datetime.today()
 
 
@@ -80,10 +79,10 @@ for index, row in schedule_df_clean.iterrows():
     if row["all_day"] == False and pd.notna(row["Time"]):
         # print("NOT ALL DAY")
         time = row["Time"]
-        print(time)
+        # print(time)
         time_parts = time.split("-")
-        print(time_parts[0])
-        print(time_parts[-1])
+        # print(time_parts[0])
+        # print(time_parts[-1])
         start_datetimes = parse_flexible_time(time_parts[0]).replace(
             year=row["Start Date"].year, 
             month=row["Start Date"].month, 
@@ -94,9 +93,16 @@ for index, row in schedule_df_clean.iterrows():
             month=row["End Date"].month, 
             day=row["End Date"].day
             )
-        print(start_datetimes)
-        print(end_datetimes)
+        # print(start_datetimes)
+        # print(end_datetimes)
              
         schedule_df_clean.loc[index, "Start Date"] = start_datetimes
         schedule_df_clean.loc[index, "End Date"] = end_datetimes
 
+        if row['Start Date'] == row['End Date']:
+            schedule_df_clean.loc[index, "all_day"] = True
+
+# %%
+schedule_df_clean
+
+# %%
